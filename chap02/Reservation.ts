@@ -1,14 +1,15 @@
 import Screening from './Screening';
 import Money from './Money';
+import Customer from '../chap04/Customer';
 
 export default class Reservation {
-  private customer: string;
+  private customer: Customer;
   private screening: Screening;
   private fee: Money;
   private audienceCount: number;
 
   constructor(
-    customer: string,
+    customer: Customer,
     screening: Screening,
     fee: Money,
     audienceCount: number
