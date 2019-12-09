@@ -7,6 +7,29 @@ export default class DiscountCondition {
   private startTime: Date;
   private endTime: Date;
 
+  isDiscountable(
+    type: DiscountConditionType,
+    data: {
+      dayOfWeek?: number;
+      sequence?: number;
+      time?: Date;
+    }
+  ): boolean {
+    if (type === DiscountConditionType.PERIOD) {
+      const { dayOfWeek, time } = data;
+      return (
+        this.dayOfWeek === dayOfWeek &&
+        this.startTime <= time &&
+        this.endTime >= time
+      );
+    }
+
+    if (type === DiscountConditionType.SEQUENCE) {
+      const { sequence } = data;
+      return this.sequence === sequence;
+    }
+  }
+
   getType(): DiscountConditionType {
     return this.type;
   }

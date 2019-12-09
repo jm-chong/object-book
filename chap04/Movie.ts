@@ -12,6 +12,28 @@ export default class Movie {
   private discountAmount: Money;
   private discountPercent: number;
 
+  calculateAmountDiscountedFee(): Money {
+    return this.fee.minus(this.discountAmount);
+  }
+
+  calculatePercentDiscountedFee(): Money {
+    return this.fee.minus(this.fee.times(this.discountPercent));
+  }
+
+  calculateNoneDiscountedFee(): Money {
+    return this.fee;
+  }
+
+  isDiscountable(whenScreened: Date, sequence: number): boolean {
+    for (const condition of this.discountConditions) {
+      return condition.isDiscountable(condition.getType(), {
+        dayOfWeek: whenScreened.getDay(),
+        time: whenScreened,
+        sequence
+      });
+    }
+  }
+
   getMovieType(): MovieType {
     return this.movieType;
   }
